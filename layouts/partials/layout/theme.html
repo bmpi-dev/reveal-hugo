@@ -8,8 +8,10 @@
 {{- if $custom_theme -}}
   {{- $custom_theme_options := $.Param "reveal_hugo.custom_theme_options" | default dict -}}
   {{- if $.Param "reveal_hugo.custom_theme_compile" -}}
+  {{- if resources.Get $custom_theme -}}
   {{ $asset := resources.Get $custom_theme | resources.ExecuteAsTemplate "_.scss" . | toCSS $custom_theme_options | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $asset.Permalink | relURL }}" id="theme">
+  {{- end -}}
   {{- else -}}
   <link rel="stylesheet" href="{{ $custom_theme | relURL }}" id="theme">
   {{- end -}}
